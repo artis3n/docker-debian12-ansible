@@ -19,11 +19,12 @@ RUN apt-get update \
 RUN pip3 install --upgrade pip setuptools wheel \
     && pip3 install $pip_packages
 
+WORKDIR /
 COPY initctl_faker .
 RUN chmod +x initctl_faker && rm -fr /sbin/initctl && ln -s /initctl_faker /sbin/initctl
 
 RUN mkdir -p /etc/ansible \
-    && echo "[local]\nlocalhost ansible_connection=local" > /etc/ansible/hosts
+    && printf "[local]\nlocalhost ansible_connection=local" > /etc/ansible/hosts
 
 # Make sure systemd doesn't start agettys on tty[1-6].
 RUN rm -f /lib/systemd/system/multi-user.target.wants/getty.target
