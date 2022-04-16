@@ -16,8 +16,8 @@ RUN apt-get update \
     && rm -Rf /usr/share/man \
     && apt-get clean
 
-RUN pip3 install --upgrade pip setuptools wheel \
-    && pip3 install $pip_packages
+RUN pip3 install --upgrade --no-cache-dir pip setuptools wheel \
+    && pip3 install --no-cache-dir $pip_packages
 
 WORKDIR /
 COPY initctl_faker .
