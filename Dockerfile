@@ -9,15 +9,15 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
     sudo systemd systemd-sysv \
     build-essential wget libffi-dev libssl-dev procps \
-    python3-pip python3-dev python3-setuptools python3-wheel python3-apt \
+    python3-pip python3-dev python3-setuptools python3-apt \
     iproute2 \
     && rm -rf /var/lib/apt/lists/* \
     && rm -Rf /usr/share/doc \
     && rm -Rf /usr/share/man \
     && apt-get clean
 
-RUN pip3 install --upgrade --no-cache-dir pip setuptools wheel \
-    && pip3 install --no-cache-dir $pip_packages
+RUN python3 -m pip install --upgrade --no-cache-dir --break-system-packages pip setuptools \
+    && pip3 install --no-cache-dir --break-system-packages $pip_packages
 
 WORKDIR /
 COPY initctl_faker .
